@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const call = async () => {
+        let response = await fetch("https://www.cryptingup.com/api/markets", {
+            "headers": {
+                "Access-Control-Allow-Origin": "*"
+            },
+            "mode": "no-cors"
+        }).then(async res => await console.log(res.text()));
+        await console.log(response);
+    };
+
+    return (
+        <div className="App">
+            <div>Hello</div>
+            <button onClick={call}>Обновить данные</button>
+        </div>
+    );
 }
 
 export default App;
