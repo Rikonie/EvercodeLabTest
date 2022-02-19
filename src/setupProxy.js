@@ -8,11 +8,4 @@ module.exports = function(app) {
             changeOrigin: true,
         })
     );
-    app.use(
-        '/daily_json.js',
-        createProxyMiddleware({
-            target: 'https://www.cbr-xml-daily.ru/',
-            changeOrigin: true,
-        })
-    );
 };

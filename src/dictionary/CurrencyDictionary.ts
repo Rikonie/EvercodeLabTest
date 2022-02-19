@@ -1,4 +1,4 @@
-class Dictionary {
+class DictionaryRecord {
     abbreviation: string;
     name: string;
 
@@ -8,7 +8,7 @@ class Dictionary {
     }
 }
 
-export const CurrencyDictionary:Dictionary[] = [{abbreviation: "BTC", name:"Bitcoin"}, {abbreviation: "USDT", name:"Tether"},
+export const CurrencyDictionary:DictionaryRecord[] = [{abbreviation: "BTC", name:"Bitcoin"}, {abbreviation: "USDT", name:"Tether"},
     {abbreviation: "ETH", name:"Ethereum"}, {abbreviation: "EUR", name:"Евро"}, {abbreviation: "TRY", name:"Турецкая лира"},
     {abbreviation: "BUSD", name:"Binance USD"}, {abbreviation: "BNB", name:"Binance Coin"}, {abbreviation: "USD", name:"USD Coin"},
     {abbreviation: "GALA", name:"Gala"}, {abbreviation: "AVAX", name:"Avalanche"}, {abbreviation: "SHIB", name:"Shiba Inu coin"},
@@ -28,3 +28,8 @@ export const CurrencyDictionary:Dictionary[] = [{abbreviation: "BTC", name:"Bitc
     {abbreviation: "VET", name:"VeChain"}, {abbreviation: "BETA", name:"Beta Finance"}, {abbreviation: "DYDX", name:"dYdX"},
     {abbreviation: "NEO", name:"NEO"}, {abbreviation: "TORN", name:"Tornado Cash"}, {abbreviation: "KAVA", name:"Kava"},
     {abbreviation: "ALGO", name:"Algorand"}, {abbreviation: "SUPER", name:"SuperFarm"}];
+
+export const GetNameByAsset =(asset: string)=> {
+    let res = CurrencyDictionary.find(a=> a.abbreviation == asset);
+    return !!res? res.name: 'unknown';
+};
