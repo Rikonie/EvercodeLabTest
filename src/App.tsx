@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Crypto} from "./crypto";
-import {CurrencyDictionary, GetNameByAsset} from "./dictionary/CurrencyDictionary";
+import {GetNameByAsset} from "./CurrencyDictionary";
 import {CryptoServices} from "./crypto-services";
+import {Button} from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import {DownloadFile} from "./download";
 
 function App() {
 
@@ -27,110 +34,74 @@ function App() {
         }
     };
 
-    function download(data:any, filename:string, type: string) {
-        let file = new Blob([data], {type: type });
-
-            let a = document.createElement("a"),
-                url = URL.createObjectURL(file);
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function() {
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(url);
-            }, 0);
-
-    }
-
-    const downloadFile = () => {
-        let str = "Аббревиатура криптовалюты, Название криптовалюты, Аббревиатура криптовалюты в которой указана цена, Название криптовалюты в которой указана цена, Цена \r\n";
-        const f = (array: Crypto[]) => {
-            for (let i = 0; i < array.length; i++) {
-                str = str + array[i].base_asset + "," + GetNameByAsset(array[i].base_asset) + "," +
-                    array[i].quote_asset + "," + GetNameByAsset(array[i].quote_asset) + "," +
-                    array[i].price + "\r\n";
-            }
-        };
-
-        if (visible) {
-            f(selectedArr)
-        } else {
-            f(arr)
-        }
-
-        download(str, "1.csv", 'text/csv;charset=UTF-8');
-    };
-
-
 return (
     <div className="App">
-        <button onClick={vis}>Показать выбранные/выбрать новые</button>
-        <button onClick={downloadFile}>Загрузить</button>
-        <div>{visible ? <>
-            <table>
-                <tbody>
-                <tr>
-                    <th>Аббревиатура криптовалюты</th>
-                    <th>Название криптовалюты</th>
-                    <th>Аббревиатура криптовалюты в которой указана цена</th>
-                    <th>Название криптовалюты в которой указана цена</th>
-                    <th>Цена</th>
-                </tr>
+        <Button onClick={vis} variant="contained">Показать выбранные/выбрать новые</Button>
+        <Button onClick={()=>DownloadFile(visible,selectedArr,arr)} variant="contained">Загрузить</Button>
+            <div>{visible ? <>
+            <Table>
+                <TableBody>
+                <TableRow>
+                    <TableCell align="center">Аббревиатура криптовалюты</TableCell>
+                    <TableCell align="center">Название криптовалюты</TableCell>
+                    <TableCell align="center">Аббревиатура криптовалюты в которой указана цена</TableCell>
+                    <TableCell align="center">Название криптовалюты в которой указана цена</TableCell>
+                    <TableCell align="center">Цена</TableCell>
+                </TableRow>
                 {selectedArr.map((g: Crypto, k: number) => {
                     return (
-                        <tr key={k}>
-                            <td>{g.base_asset}</td>
-                            <td>{GetNameByAsset(g.base_asset)}</td>
-                            <td>{g.quote_asset}</td>
-                            <td>{GetNameByAsset(g.quote_asset)}</td>
-                            <td>{g.price}</td>
-                        </tr>
+                        <TableRow key={k}>
+                            <TableCell align="center">{g.base_asset}</TableCell>
+                            <TableCell align="center">{GetNameByAsset(g.base_asset)}</TableCell>
+                            <TableCell align="center">{g.quote_asset}</TableCell>
+                            <TableCell align="center">{GetNameByAsset(g.quote_asset)}</TableCell>
+                            <TableCell align="center">{g.price}</TableCell>
+                        </TableRow>
                     )
                 })}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
         </> : <>
-            <table>
-                <tbody>
-                <tr>
-                    <th>Аббревиатура криптовалюты</th>
-                    <th>Выбор</th>
-                    <th>Название криптовалюты</th>
-                    <th>Аббревиатура криптовалюты в которой указана цена</th>
-                    <th>Название криптовалюты в которой указана цена</th>
-                    <th>Цена</th>
-                </tr>
+            <Table>
+                <TableBody>
+                <TableRow>
+                    <TableCell align="center">Аббревиатура криптовалюты</TableCell>
+                    <TableCell align="center">Выбор</TableCell>
+                    <TableCell align="center">Название криптовалюты</TableCell>
+                    <TableCell align="center">Аббревиатура криптовалюты в которой указана цена</TableCell>
+                    <TableCell align="center">Название криптовалюты в которой указана цена</TableCell>
+                    <TableCell align="center">Цена</TableCell>
+                </TableRow>
                 {arr?.map((i: Crypto, key: number) => {
                     return (
-                        <tr key={key}>
-                            <td>{i.base_asset}</td>
-                            <td><input type='checkbox' onChange={(e) => {
+                        <TableRow key={key}>
+                            <TableCell align="center">{i.base_asset}</TableCell>
+                            <TableCell align="center"> <Checkbox onChange={(e) => {
                                 let selArr: Array<Crypto> = Array.from(selectedArr);
                                 if (e.target.checked) {
                                     selArr.push(i);
                                 } else {
-                                    let el = selArr.find((x) => x.id == i.id);
+                                    let el = selArr.find((x) => x.id === i.id);
                                     console.log('el', el);
                                     let index = !!el ? selArr.indexOf(el) : -1;
                                     console.log('index', index);
-                                    if (index != -1) {
+                                    if (index !== -1) {
                                         selArr.splice(index, 1);
                                     }
 
                                     console.log('selArr', selArr);
                                 }
                                 setSelectedArr(selArr)
-                            }}/></td>
-                            <td>{GetNameByAsset(i.base_asset)}</td>
-                            <td>{i.quote_asset}</td>
-                            <td>{GetNameByAsset(i.quote_asset)}</td>
-                            <td>{i.price}</td>
-                        </tr>
+                            }}/></TableCell>
+                            <TableCell align="center">{GetNameByAsset(i.base_asset)}</TableCell>
+                            <TableCell align="center">{i.quote_asset}</TableCell>
+                            <TableCell align="center">{GetNameByAsset(i.quote_asset)}</TableCell>
+                            <TableCell align="center">{i.price}</TableCell>
+                        </TableRow>
                     )
                 })}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
         </>}</div>
     </div>)
 }

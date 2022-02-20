@@ -30,6 +30,6 @@ export const CurrencyDictionary:DictionaryRecord[] = [{abbreviation: "BTC", name
     {abbreviation: "ALGO", name:"Algorand"}, {abbreviation: "SUPER", name:"SuperFarm"}];
 
 export const GetNameByAsset =(asset: string)=> {
-    let res = CurrencyDictionary.find(a=> a.abbreviation == asset);
+    let res = CurrencyDictionary.find(a=> a.abbreviation === asset);
     return !!res? res.name: 'unknown';
 };
