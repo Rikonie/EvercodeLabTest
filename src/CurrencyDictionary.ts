@@ -27,7 +27,8 @@ export const CurrencyDictionary:DictionaryRecord[] = [{abbreviation: "BTC", name
     {abbreviation: "TLM", name:"Alien Worlds"}, {abbreviation: "PEOPLE", name:"ConstitutionDAO"}, {abbreviation: "CRV", name:"Curve"},
     {abbreviation: "VET", name:"VeChain"}, {abbreviation: "BETA", name:"Beta Finance"}, {abbreviation: "DYDX", name:"dYdX"},
     {abbreviation: "NEO", name:"NEO"}, {abbreviation: "TORN", name:"Tornado Cash"}, {abbreviation: "KAVA", name:"Kava"},
-    {abbreviation: "ALGO", name:"Algorand"}, {abbreviation: "SUPER", name:"SuperFarm"}];
+    {abbreviation: "ALGO", name:"Algorand"}, {abbreviation: "SUPER", name:"SuperFarm"},
+    {abbreviation: "btc", name:"Bitcoin"}, {abbreviation: "eth", name:"Ethereum"}];
 
 export const GetNameByAsset =(asset: string)=> {
     let res = CurrencyDictionary.find(a=> a.abbreviation === asset);

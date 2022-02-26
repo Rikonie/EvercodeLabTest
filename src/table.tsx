@@ -13,6 +13,7 @@ export class TableProps {
 }
 
 export const TableComponent:React.FC<TableProps>=({arr, onChange})=>{
+    
     return(
 <Table>
     <TableBody>

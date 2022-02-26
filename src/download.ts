@@ -1,5 +1,6 @@
 import {Crypto} from "./crypto";
 import {GetNameByAsset} from "./CurrencyDictionary";
+import {Wallet} from "./wallet";
 
 function download(data: any, filename: string, type: string) {
     let file = new Blob([data], {type: type});
@@ -28,4 +29,12 @@ export const DownloadFile = ( array: Crypto[]) => {
 
         download(str, "Crypto.csv", 'text/csv;charset=UTF-8');
 
+};
+
+export const DownloadBalanceFile = (array:Wallet[]) =>{
+    let str = "Название валюты, Номер кошелька, Баланс \r\n";
+    for (let i = 0; i<array.length; i++){
+        str = str+array[i].nameCrypto+','+array[i].nameWallet+','+array[i].balance+"\r\n";
+    }
+    download(str, "WalletBalance.csv", 'text/csv;charset=UTF-8');
 };
