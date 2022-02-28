@@ -33,6 +33,8 @@ export const Balance = () => {
                 let arr: Array<Wallet> = Array.from(balance);
                 arr.push(n);
                 setBalance(arr);
+            } else {
+                findWallet.balance = balanceWallet
             }
         }
 
